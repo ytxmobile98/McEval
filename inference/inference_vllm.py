@@ -4,9 +4,9 @@ import os
 import json
 import utils
 from transformers import AutoTokenizer, AutoModelForCausalLM
+from dirs import RESULTS_DIR
 import transformers
 import torch
-
 
 CODELLAMA_SYSTEM_PROMPT = """\
 You are a helpful, respectful and honest assistant with a deep knowledge of code and software design. Always answer as helpfully as possible, while being safe. Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.\n\nIf a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information.\
@@ -231,6 +231,8 @@ def run(args):
 
         raw_datas[idx]["raw_generation"] = [generated_text]
 
+    os.makedirs(args.outdir, exist_ok=True)
+
     save_path = os.path.join(args.outdir, args.base_model.split(
         '/')[-1]+'_'+args.task+'.jsonl')
 
@@ -251,8 +253,8 @@ if __name__ == '__main__':
                         type=str, help="config path")
     parser.add_argument("--task", default="complete",
                         type=str, help="config path")
-    parser.add_argument("--outdir", default="outputs",
-                        type=str, help="config path")
+    parser.add_argument("--outdir", default=f"{RESULTS_DIR}/generation",
+                        type=str, help="output directory")
     parser.add_argument("--do_sample", default=False,
                         type=bool, help="config path")
     parser.add_argument("--max_length", type=int,
