@@ -1,18 +1,20 @@
+CURDIR=$(dirname "$(realpath "$0")")
+INFERENCE_VLLM="$CURDIR/../inference_vllm.py"
 
-MODEL_DIR='<model dir>'
+COMPLETE_DATA_PATH="$CURDIR/completion/explain_data"
+MODEL_DIR='/data/models/Qwen2.5-Coder-7B-Instruct'
 
-COMPLETE_DATA_PATH='./explain_data'
-python inference_vllm.py \
-    --data_path $COMPLETE_DATA_PATH \
-    --base_model $MODEL_DIR \
+python "$INFERENCE_VLLM" \
+    --data_path "$COMPLETE_DATA_PATH" \
+    --base_model "$MODEL_DIR" \
     --task 'explain_stage1' \
     --outdir 'explain_stage1'
 
-python gen_stage2_instruction.py
+python "$CURDIR/../gen_stage2_instruction.py"
 
 COMPLETE_DATA_PATH='./explain_stage2/explain_stage1'
-python inference_vllm.py \
-    --data_path $COMPLETE_DATA_PATH \
-    --base_model $MODEL_DIR \
+python "$INFERENCE_VLLM" \
+    --data_path "$COMPLETE_DATA_PATH" \
+    --base_model "$MODEL_DIR" \
     --task 'explain_stage2' \
-    --outdir 'explain_result' 
+    --outdir 'explain_result'
