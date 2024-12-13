@@ -1,10 +1,10 @@
 CURDIR=$(dirname "$(realpath "$0")")
+source "$CURDIR/../../common.env.sh"
+
 RESULTS_DIR="$CURDIR/../../results"
 EXPLIAIN_DIR="$CURDIR/../../explanation/explaination_data"
 
 INFERENCE_VLLM="$CURDIR/../inference_vllm.py"
-
-MODEL_DIR='/data/models/Qwen2.5-Coder-7B-Instruct'
 
 # stage 1
 COMPLETE_DATA_PATH="$EXPLIAIN_DIR"
