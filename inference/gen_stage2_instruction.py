@@ -1,14 +1,12 @@
 import os
 import json
+from dirs import RESULTS_DIR
 
 template1 = '''Write a {lang} function `{signature}` to solve the following problem:\n{docstring}'''
 template_awk = '''Using the awk command in Linux, complete the following task:\n{docstring}'''
 template_html = '''Generate HTML code according to the following requirements:\n{docstring}'''
 template_json = '''Create a JSON object according to the following requirements:\n{docstring}'''
 template_md = '''Generate Markdown code according to the following requirements:\n{docstring}'''
-
-CURDIR = os.path.dirname(__file__)
-RESULTS_DIR = os.path.abspath(f'{CURDIR}/../results')
 
 
 def gen_stage2_instruction(item):
