@@ -12,6 +12,8 @@ CODELLAMA_SYSTEM_PROMPT = """\
 You are a helpful, respectful and honest assistant with a deep knowledge of code and software design. Always answer as helpfully as possible, while being safe. Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.\n\nIf a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information.\
 """
 
+STOP_WORDS = ['<|EOT|>']
+
 
 def code_llama_tokenizer_chat(
     message,
@@ -215,7 +217,8 @@ Below is an instruction that describes a task. Write a response that appropriate
 def run(args):
     prompts, raw_datas = load_data(args)
     sampling_params = vllm.SamplingParams(
-        temperature=0.0, top_p=0.95, max_tokens=args.max_length)
+        temperature=0.0, top_p=0.95, max_tokens=args.max_length,
+        stop=STOP_WORDS)
 
     print("model:", args.base_model)
     model = vllm.LLM(model=args.base_model,
