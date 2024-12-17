@@ -22,6 +22,6 @@ function split_result {
     python "$SPLIT_RESULT_PY" --split_file "$SPLIT_FILE" --save_dir "$SAVE_DIR"
 }
 
-for TASK in completion_light completion explain_stage1 explain_stage2 generation; do
+for TASK in completion_light completion explain_stage1 explain_stage2; do
     split_result "$TASK"
 done
